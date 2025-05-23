@@ -38,8 +38,12 @@ export const sendMessage= async(req,res)=>{
             image:imageUrl
         })
 
+        const messageNew = await Message.findById(message._id).populate(
+          "senderId receiverId"
+        );
+
         if(message){
-           return res.status(201).json(message)
+           return res.status(201).json(messageNew)
         }
         else{
             throw new Error("internal server error")
@@ -75,7 +79,7 @@ export const getMessage=async(req,res)=>{
            {senderId:me,receiverId:other},
            {senderId:other,receiverId:me}
         ]
-    })
+    }).populate("receiverId").populate("senderId")
 
     res.status(200).json(message)
 

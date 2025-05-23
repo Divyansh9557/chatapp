@@ -48,7 +48,6 @@ export const loginUser= async(req,res)=>{
         res.status(201).json(user)
     } catch (error) {
         res.status(401).json({error:true,message:error.message})
-        console.log(error);
     }
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axiosInstance";
 import toast from "react-hot-toast";
@@ -39,6 +40,17 @@ export const useMessageStore = create((set) => ({
    },
 
    setSelectedUser:(selectedUser)=>{set({selectedUser})},
+
+
+   sendMessage:async(reciverId,data)=>{
+         try {
+            const res= await axiosInstance.post(`message/${reciverId}`,data)
+            set((state)=> ({messages:[...state.messages,res.data]}));
+         } catch (error) {
+            console.log(error)
+         }
+        
+   }
 
 
 }));

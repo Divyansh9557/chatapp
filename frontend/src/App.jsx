@@ -11,20 +11,20 @@ import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
 
 const App = () => {
-   const {authUser,checkauth}= useAuthStore()
-   useEffect(()=>{
-     console.log(authUser)
+   const {authUser,checkauth,onlineUsers,getOnlineUsers}= useAuthStore()
+   console.log(onlineUsers)
+   useEffect(()=>{ 
      checkauth()
+     getOnlineUsers()
    },[])
 
-   console.log(authUser)
 
   return (
 
-    <div className='bg-gray-800 text-white  ' >
+    <div className='; text-white  ' >
       <Navbar/>
     <Routes>
-      <Route path='/' element= { authUser? <HomePage/> : <Navigate to={'/login'} />  }  />
+      <Route path='/'  element= { authUser? <HomePage/> : <Navigate to={'/login'} />  }  />
       <Route path='/profile' element= { authUser? <Profile/>:<Navigate to={'/login'} />}  />
       <Route path='/login' element= { !authUser? <LoginForm/>: <Navigate to={'/'} />  }  />
       <Route path='/signup' element= { !authUser? <SignupForm/> : <Navigate to={'/'} />  }  />

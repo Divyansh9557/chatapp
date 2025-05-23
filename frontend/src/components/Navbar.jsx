@@ -7,7 +7,7 @@ export default function Navbar() {
     const authuser= useAuthStore((state)=>state.authUser)
     const logout= useAuthStore((state)=>state.logout)
   return (
-    <nav className="bg-[#0f0f0f] text-white px-6 py-4 flex justify-between items-center shadow-md border-b border-[#2a2a2a]">
+    <nav className="bg-[#0f0f0f] text-white px-6 py-2 flex justify-between items-center shadow-md border-b border-[#2a2a2a]">
       <Link to={'/'} >
       <div className="flex items-center gap-2">
         <div className="bg-purple-700 p-2 rounded-md">

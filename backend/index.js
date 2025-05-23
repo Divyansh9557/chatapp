@@ -6,6 +6,8 @@ import messageRoutes from "./routes/message.route.js"
 import dotenv from "dotenv"
 import { v2 as cloudinary } from 'cloudinary'
 import cors from "cors"
+import { app,server,io } from "./lib/socket.js";
+
 
 
 
@@ -18,12 +20,12 @@ cloudinary.config({
 });
 
 
-const app= express()
+
 
 const port = process.env.PORT || 8000
 
   app.use(express.urlencoded({extended:true}))
-  app.use(express.json())
+  app.use(express.json({limit:"5mb"}))
   app.use(cookieParser())
   app.use(cors({
    origin:process.env.CORS_ORIGIN,
@@ -35,7 +37,7 @@ const port = process.env.PORT || 8000
   app.use("/api/v2/message",messageRoutes)
 
  connectDb().then(()=>{
-    app.listen(port,()=>{
+    server.listen(port,()=>{
         console.log(`app is listening on port ${port}`);
         
     })
