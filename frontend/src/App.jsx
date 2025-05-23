@@ -21,7 +21,7 @@ const App = () => {
 
   return (
 
-    <div className='bg-gray-800 bg-[url("./src/assets/bgImage.svg")] bg-contain ' >
+    <div className='bg-gray-800 text-white  ' >
       <Navbar/>
     <Routes>
       <Route path='/' element= { authUser? <HomePage/> : <Navigate to={'/login'} />  }  />

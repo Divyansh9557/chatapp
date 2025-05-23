@@ -1,18 +1,24 @@
-import React from 'react'
-import Sidebar from '../components/Sidebar'
-import MainComponent from '../components/MainComponent'
-import RightBar from '../components/RightBar'
+
+
+import Sidebar from "../components/Sidebar";
+import NoChatSelected from "../components/NoChatSelected";
+import ChatContainer from "../components/ChatContainer";
+import { useMessageStore } from "../store/useMessageStore";
 
 const HomePage = () => {
+ const selectedUser = useMessageStore((state)=>state.selectedUser)
   return (
-    <div className='w-full h-screen flex px-[10%] py-[4%] justify-center items-center ' >
-           <div className='text-white backdrop-blur-2xl mx-auto w-full h-full rounded-2xl border-3   border-white grid grid-cols-4   ' >
-              <Sidebar/>
-              <MainComponent />
-              <RightBar/>
-           </div>
-    </div>
-  )
-}
+    <div className="h-screen bg-base-200">
+      <div className="flex items-center justify-center pt-20 px-4">
+        <div className="bg-base-100 rounded-lg border-white border-2  shadow-cl w-full max-w-6xl h-[calc(100vh-8rem)]">
+          <div className="flex h-full rounded-lg overflow-hidden">
+            <Sidebar />
 
-export default HomePage
+            {!selectedUser ? <NoChatSelected /> :<ChatContainer/>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default HomePage;
