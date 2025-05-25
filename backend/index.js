@@ -6,8 +6,8 @@ import messageRoutes from "./routes/message.route.js"
 import dotenv from "dotenv"
 import { v2 as cloudinary } from 'cloudinary'
 import cors from "cors"
-import { app,server,io } from "./lib/socket.js";
-
+import { app,server } from "./lib/socket.js";
+import path from "path";
 
 
 
@@ -35,6 +35,14 @@ const port = process.env.PORT || 8000
 
   app.use("/api/v2/auth",authRoutes)
   app.use("/api/v2/message",messageRoutes)
+
+  if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 
  connectDb().then(()=>{
     server.listen(port,()=>{

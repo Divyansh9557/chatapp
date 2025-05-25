@@ -13,7 +13,7 @@ export default function Navbar() {
         <div className="bg-purple-700 p-2 rounded-md">
           <span className="text-white font-bold text-lg">🟪</span>
         </div>
-        <span className="text-xl font-semibold">Chatty</span>
+        <span className="text-xl font-semibold">Chattuu</span>
       </div>
       </Link>
 
