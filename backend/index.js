@@ -22,7 +22,7 @@ cloudinary.config({
 
 
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 7000
 
   app.use(express.urlencoded({extended:true}))
   app.use(express.json({limit:"5mb"}))
