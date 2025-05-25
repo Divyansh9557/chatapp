@@ -1,3 +1,4 @@
+import { getUserSocketID, io } from "../lib/socket.js"
 import Message from "../models/message.model.js"
 import User from "../models/user.model.js"
 import { v2 as cloudinary } from 'cloudinary'
@@ -41,6 +42,13 @@ export const sendMessage= async(req,res)=>{
         const messageNew = await Message.findById(message._id).populate(
           "senderId receiverId"
         );
+
+        const socketId= getUserSocketID(receiverId)
+            if(socketId){
+                io.to(socketId).emit("newMessage",messageNew)
+            }
+
+
 
         if(message){
            return res.status(201).json(messageNew)

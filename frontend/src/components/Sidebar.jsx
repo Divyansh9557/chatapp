@@ -19,6 +19,7 @@ const Sidebar = () => {
   if (isUserLoading) return <SidebarSkeleton />;
 
   
+  
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-zinc-800 bg-zinc-900/60 backdrop-blur-lg flex flex-col transition-all duration-200">
@@ -30,13 +31,7 @@ const Sidebar = () => {
         </div>
 
         {/* Online Filter */}
-        <div className="mt-4 hidden lg:flex items-center gap-2 text-zinc-400">
-          <label className="cursor-pointer flex items-center gap-2 text-sm">
-            <input type="checkbox" className="form-checkbox h-4 w-4 accent-green-500" />
-            Show online only
-          </label>
-          <span className="text-xs ml-auto">(online)</span>
-        </div>
+        
       </div>
 
       {/* Users */}

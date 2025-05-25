@@ -11,12 +11,18 @@ import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
 
 const App = () => {
-   const {authUser,checkauth,onlineUsers,getOnlineUsers}= useAuthStore()
+   const {authUser,checkauth,onlineUsers,getOnlineUsers,connectSocket}= useAuthStore()
    console.log(onlineUsers)
-   useEffect(()=>{ 
-     checkauth()
-     getOnlineUsers()
-   },[])
+  useEffect(() => {
+  checkauth();
+}, []);
+
+useEffect(() => {
+  if (authUser) {
+    connectSocket();
+    getOnlineUsers();
+  }
+}, [authUser]); 
 
 
   return (

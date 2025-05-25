@@ -13,6 +13,10 @@ const io= new Server(server,{
 })
  const onlineUsermap= {}
 
+ export const getUserSocketID= (userId)=>{
+    return onlineUsermap[userId]
+ }
+
 io.on("connection",(socket)=>{
    console.log("user is connected",socket.id)
    const userId= socket.handshake.query.userId

@@ -1,9 +1,11 @@
+
 /* eslint-disable no-undef */
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axiosInstance";
 import toast from "react-hot-toast";
+import { useAuthStore } from "./useAuthStore";
 
-export const useMessageStore = create((set) => ({
+export const useMessageStore = create((set,get) => ({
   messages: [],
   users:[],
   selectedUser:null,
@@ -50,7 +52,40 @@ export const useMessageStore = create((set) => ({
             console.log(error)
          }
         
-   }
+   },
+
+   subscribedMessages:async()=>{
+      try {
+         const socket = useAuthStore.getState().socket
+         if(!socket){
+            console.log("socket is not config");
+            return 
+         }
+          socket.on("newMessage", (newMessage)=>{
+            console.log(newMessage);
+            console.log(get().selectedUser._id);
+            
+
+              if(newMessage.senderId._id!==get().selectedUser._id) return
+             set((state) => ({ messages: [...state.messages, newMessage] }))
+          })
+
+
+      } catch (error) {
+         console.log(error)
+      }
+   },
+
+   unSubscribedMessages:async()=>{
+    try {
+       const socket = useAuthStore.getState().socket
+       socket.off("newMessage")
+    } catch (error) {
+       console.log(error)
+    }
+   },
+
+  
 
 
 }));

@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useMessageStore } from "../store/useMessageStore";
 import ChatSkeleton from "../skeleton/ChatSkeleton";
@@ -11,13 +12,30 @@ const ChatContainer = () => {
   const messages = useMessageStore((store) => store.messages);
   const selectedUser = useMessageStore((store) => store.selectedUser);
   const isMessageLoading = useMessageStore((store) => store.isMessageLoading);
+  const subscribedMessages = useMessageStore((store) => store.subscribedMessages);
+  const unSubscribedMessages = useMessageStore((store) => store.unSubscribedMessages);
   const authUser = useAuthStore((state) => state.authUser);
+  const onlineUsers = useAuthStore((state) => state.onlineUsers);
+
+  const [isOnline,setIsOnline]= useState(false)
 
   const scrollRef = useRef(null);
+
 
   useEffect(() => {
     if (selectedUser?._id) {
       getUserMessages(selectedUser._id);
+    }
+    subscribedMessages()
+    
+    const online = onlineUsers.some((curr)=>{
+          return curr === selectedUser?._id;
+      })
+      setIsOnline(online)
+    
+   
+    return ()=> {
+      unSubscribedMessages()
     }
   }, [selectedUser]);
 
@@ -26,6 +44,8 @@ const ChatContainer = () => {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  
 
   const handleClose = () => {
     setSelectedUser(null);
@@ -44,9 +64,15 @@ const ChatContainer = () => {
             className="w-8 h-8 rounded-full"
             alt={selectedUser.name}
           />
+   
+
           <div>
             <div className="font-semibold text-yellow-300">{selectedUser.name}</div>
-            <div className="text-xs text-zinc-400">Offline</div>
+            <div className="text-xs text-zinc-400">
+              {
+                isOnline?"Online":"Offline"
+              }
+            </div>
           </div>
         </div>
         <button
